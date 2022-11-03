@@ -12,9 +12,9 @@ export enum ContainerStatus {
 }
 
 export enum Privacy {
-  UNKOWN_PRIVACY = 'unknown_privacy',
-  PUBLIC = 'public',
   PRIVATE = 'private',
+  PUBLIC = 'public',
+  UNKOWN_PRIVACY = 'unknown_privacy',
 }
 
 export interface Namespace {
@@ -63,12 +63,12 @@ export interface Log {
 }
 
 export enum InstanceState {
+  LOCKED = 'locked',
   RUNNING = 'running',
+  STARTING = 'starting',
   STOPPED = 'stopped',
   STOPPED_IN_PLACE = 'stopped in place',
-  STARTING = 'starting',
   STOPPING = 'stopping',
-  LOCKED = 'locked',
 }
 
 export interface Instance {
@@ -94,19 +94,19 @@ export interface Instance {
 }
 
 export enum DatabaseStatus {
-  UNKNOWN = 'unknown',
-  READY = 'ready',
-  PROVISIONING = 'provisioning',
+  AUTOHEALING = 'autohealing',
+  BACKUPING = 'backuping',
   CONFIGURING = 'configuring',
   DELETING = 'deleting',
-  ERROR = 'error',
-  AUTOHEALING = 'autohealing',
-  LOCKED = 'locked',
-  INITIALIZING = 'initializing',
   DISK_FULL = 'disk_full',
-  BACKUPING = 'backuping',
-  SNAPSHOTTING = 'snapshotting',
+  ERROR = 'error',
+  INITIALIZING = 'initializing',
+  LOCKED = 'locked',
+  PROVISIONING = 'provisioning',
+  READY = 'ready',
   RESTARTING = 'restarting',
+  SNAPSHOTTING = 'snapshotting',
+  UNKNOWN = 'unknown',
 }
 
 export interface Database {
@@ -125,4 +125,32 @@ export interface Database {
     type: 'lssd' | 'bssd'
     size: number
   }
+}
+
+export enum RedisClusterStatus {
+  AUTOHEALING = 'autohealing',
+  CONFIGURING = 'configuring',
+  DELETING = 'deleting',
+  ERROR = 'error',
+  INITIALIZING = 'initializing',
+  LOCKED = 'locked',
+  PROVISIONING = 'provisioning',
+  READY = 'ready',
+  SUSPENDED = 'suspended',
+  UNKNOWN = 'unknown',
+}
+
+export interface RedisCluster {
+  id: string
+  name: string
+  status: RedisClusterStatus
+  version: string
+  zone: string
+  endpoints: {
+    ips: string[]
+    port: number
+  }[]
+  tags: string[]
+  node_type: string
+  cluster_size: number
 }

@@ -6,6 +6,7 @@ import {
   ContainerStatus,
   InstanceState,
   DatabaseStatus,
+  RedisClusterStatus,
 } from './scaleway/types'
 import { useEffect, useRef } from 'react'
 
@@ -112,6 +113,39 @@ export function getDatabaseStatusIcon(status: DatabaseStatus) {
       icon = { source: Icon.CircleProgress100, tintColor: Color.Green }
       break
     case DatabaseStatus.DELETING:
+      icon = { source: Icon.Stop, tintColor: Color.Red }
+      break
+  }
+  return {
+    value: icon,
+    tooltip: status[0].toUpperCase() + status.slice(1),
+  }
+}
+
+export function getRedisClusterStatusIcon(status: RedisClusterStatus) {
+  let icon: { source: Icon; tintColor?: Color }
+
+  switch (status) {
+    case RedisClusterStatus.UNKNOWN:
+      icon = { source: Icon.QuestionMarkCircle }
+      break
+    case RedisClusterStatus.AUTOHEALING:
+    case RedisClusterStatus.CONFIGURING:
+    case RedisClusterStatus.INITIALIZING:
+    case RedisClusterStatus.PROVISIONING:
+      icon = { source: Icon.CircleProgress100, tintColor: Color.Blue }
+      break
+    case RedisClusterStatus.LOCKED:
+      icon = { source: Icon.Lock, tintColor: Color.Red }
+      break
+    case RedisClusterStatus.ERROR:
+    case RedisClusterStatus.SUSPENDED:
+      icon = { source: Icon.CircleProgress100, tintColor: Color.Red }
+      break
+    case RedisClusterStatus.READY:
+      icon = { source: Icon.CircleProgress100, tintColor: Color.Green }
+      break
+    case RedisClusterStatus.DELETING:
       icon = { source: Icon.Stop, tintColor: Color.Red }
       break
   }

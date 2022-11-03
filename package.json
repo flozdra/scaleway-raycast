@@ -30,6 +30,13 @@
       "description": "Get information about databases",
       "mode": "view",
       "icon": "databases.png"
+    },
+    {
+      "name": "redis",
+      "title": "Redis",
+      "description": "Get information about redis clusters",
+      "mode": "view",
+      "icon": "redis.png"
     }
   ],
   "dependencies": {
@@ -56,14 +63,6 @@
       "type": "password",
       "default": "",
       "required": true
-    },
-    {
-      "name": "logMessageKey",
-      "title": "Container log message Key",
-      "description": "Display the key of the parsed container log.",
-      "type": "textfield",
-      "default": "",
-      "required": false
     }
   ],
   "scripts": {
