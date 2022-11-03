@@ -16,6 +16,7 @@ import InstanceDetails from './instances/instance-details'
 import Style = Toast.Style
 import ActionStyle = Alert.ActionStyle
 import { powerOffInstance, powerOnInstance, rebootInstance } from './instances/instance-actions'
+import { InstancesAPI } from './scaleway/instances-api'
 
 interface InstancesState {
   isLoading: boolean
@@ -30,17 +31,9 @@ export default function Instances() {
     setState((previous) => ({ ...previous, isLoading: true }))
 
     try {
-      const responses = await Promise.all(
-        ScalewayAPI.ZONES.map((zone) =>
-          ScalewayAPI.get<{ servers: Instance[] }>(`/instance/v1/zones/${zone}/servers`)
-        )
-      )
+      const instances = await InstancesAPI.getAllInstances()
 
-      setState((previous) => ({
-        ...previous,
-        instances: responses.map((r) => r.servers).flat(),
-        isLoading: false,
-      }))
+      setState((previous) => ({ ...previous, instances, isLoading: false }))
     } catch (error) {
       await catchError(error)
       setState((previous) => ({

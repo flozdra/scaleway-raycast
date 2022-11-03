@@ -3,6 +3,7 @@ import { Alert, confirmAlert, Icon, showToast, Toast } from '@raycast/api'
 import { catchError, ScalewayAPI } from '../scaleway/api'
 import ActionStyle = Alert.ActionStyle
 import Style = Toast.Style
+import { InstancesAPI } from '../scaleway/instances-api'
 
 export async function rebootInstance(instance: Instance) {
   try {
@@ -18,9 +19,9 @@ export async function rebootInstance(instance: Instance) {
         message: instance.name,
         style: Style.Animated,
       })
-      await ScalewayAPI.post(`/instance/v1/zones/${instance.zone}/servers/${instance.id}/action`, {
-        action: 'reboot',
-      })
+
+      await InstancesAPI.rebootInstance(instance)
+
       await showToast({
         title: 'Instance successfully rebooted',
         message: instance.name,
@@ -49,9 +50,9 @@ export async function powerOnInstance(instance: Instance) {
         message: instance.name,
         style: Style.Animated,
       })
-      await ScalewayAPI.post(`/instance/v1/zones/${instance.zone}/servers/${instance.id}/action`, {
-        action: 'poweron',
-      })
+
+      await InstancesAPI.powerOnInstance(instance)
+
       await showToast({
         title: 'Instance successfully powered on',
         message: instance.name,
@@ -80,9 +81,9 @@ export async function powerOffInstance(instance: Instance) {
         message: instance.name,
         style: Style.Animated,
       })
-      await ScalewayAPI.post(`/instance/v1/zones/${instance.zone}/servers/${instance.id}/action`, {
-        action: 'poweroff',
-      })
+
+      await InstancesAPI.powerOffInstance(instance)
+
       await showToast({
         title: 'Instance successfully shutdown',
         message: instance.name,

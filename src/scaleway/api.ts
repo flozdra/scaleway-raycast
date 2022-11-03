@@ -8,15 +8,6 @@ export class ScalewayAPI {
   private static BASE_URL = 'https://api.scaleway.com'
   private static SECRET_KEY = getPreferenceValues().secretKey
   public static REGIONS = ['fr-par', 'nl-ams', 'pl-waw']
-  public static ZONES = [
-    'fr-par-1',
-    'fr-par-2',
-    'fr-par-3',
-    'nl-ams-1',
-    'nl-ams-2',
-    'pl-waw-1',
-    'pl-waw-2',
-  ]
 
   public static async get<T>(endpoint: string, query: Params = {}): Promise<T> {
     // Build the URL

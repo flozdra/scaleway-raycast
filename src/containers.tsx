@@ -6,6 +6,7 @@ import { Container, ContainerDomain, ContainerStatus, Namespace } from './scalew
 import ContainerLogs from './containers/container-logs'
 import ContainerDetails from './containers/container-details'
 import Style = Toast.Style
+import { ContainersAPI } from './scaleway/containers-api'
 
 interface ContainersState {
   isLoading: boolean
@@ -25,9 +26,9 @@ export default function Containers() {
           message: container.name,
           style: Style.Animated,
         })
-        await ScalewayAPI.post(
-          `/containers/v1beta1/regions/${container.region}/containers/${container.id}/deploy`
-        )
+
+        await ContainersAPI.deployContainer(container)
+
         await showToast({
           title: 'Container successfully deployed',
           message: container.name,
@@ -40,43 +41,31 @@ export default function Containers() {
       await catchError(error, 'Error while deploying a container')
     }
   }
+
   async function fetchContainers() {
     setState((previous) => ({ ...previous, isLoading: true }))
 
     const allNamespaces: ContainersState['namespaces'] = []
 
     try {
-      // Get namespaces, containers and domains from all regions
-      for (const region of ScalewayAPI.REGIONS) {
-        // Fetch namespaces and containers for each region
-        const [namespaces, containers, domains] = await Promise.all([
-          ScalewayAPI.get<{ namespaces: Namespace[] }>(
-            `/containers/v1beta1/regions/${region}/namespaces`,
-            { region }
-          ),
-          ScalewayAPI.get<{ containers: Container[] }>(
-            `/containers/v1beta1/regions/${region}/containers`,
-            { region }
-          ),
-          ScalewayAPI.get<{ domains: ContainerDomain[] }>(
-            `/containers/v1beta1/regions/${region}/domains`,
-            { region }
-          ),
-        ])
+      const [namespaces, containers, domains] = await Promise.all([
+        ContainersAPI.getAllNamespaces(),
+        ContainersAPI.getAllContainers(),
+        ContainersAPI.getAllDomains(),
+      ])
 
-        // Combine them into a single array of namespaces with containers
-        allNamespaces.push(
-          ...namespaces.namespaces.map((namespace) => ({
-            ...namespace,
-            containers: containers.containers
-              .filter((c) => c.namespace_id === namespace.id)
-              .map((container) => ({
-                ...container,
-                domains: domains.domains.filter((d) => d.container_id === container.id),
-              })),
-          }))
-        )
-      }
+      // Regroup containers by namespace and add domains to each container
+      allNamespaces.push(
+        ...namespaces.map((namespace) => ({
+          ...namespace,
+          containers: containers
+            .filter((c) => c.namespace_id === namespace.id)
+            .map((container) => ({
+              ...container,
+              domains: domains.filter((d) => d.container_id === container.id),
+            })),
+        }))
+      )
 
       setState((previous) => ({
         ...previous,

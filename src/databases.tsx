@@ -1,9 +1,10 @@
 import { ActionPanel, List } from '@raycast/api'
-import { catchError, ScalewayAPI } from './scaleway/api'
+import { catchError } from './scaleway/api'
 import { useEffect, useState } from 'react'
 import { Database } from './scaleway/types'
 import { getCountryImage, getDatabaseStatusIcon } from './utils'
 import DatabaseDetails from './databases/database-details'
+import { DatabasesAPI } from './scaleway/databases-api'
 
 interface DatabasesState {
   isLoading: boolean
@@ -18,17 +19,9 @@ export default function Databases() {
     setState((previous) => ({ ...previous, isLoading: true }))
 
     try {
-      const responses = await Promise.all(
-        ScalewayAPI.REGIONS.map((region) =>
-          ScalewayAPI.get<{ instances: Database[] }>(`/rdb/v1/regions/${region}/instances`)
-        )
-      )
+      const databases = await DatabasesAPI.getAllDatabases()
 
-      setState((previous) => ({
-        ...previous,
-        databases: responses.map((r) => r.instances).flat(),
-        isLoading: false,
-      }))
+      setState((previous) => ({ ...previous, databases, isLoading: false }))
     } catch (error) {
       await catchError(error)
       setState((previous) => ({
