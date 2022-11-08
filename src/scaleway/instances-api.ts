@@ -1,5 +1,7 @@
 import { Instance } from './types'
 import { ScalewayAPI } from './api'
+import { environment } from '@raycast/api'
+import { fakeInstances } from './fake-data/fake-instances'
 
 export class InstancesAPI {
   private static readonly ZONES = [
@@ -9,6 +11,8 @@ export class InstancesAPI {
   ]
 
   public static async getAllInstances(): Promise<Instance[]> {
+    if (environment.isDevelopment) return fakeInstances
+
     const responses = await Promise.all(
       InstancesAPI.ZONES.map((zone) =>
         ScalewayAPI.get<{ servers: Instance[] }>(`/instance/v1/zones/${zone}/servers`)
@@ -18,18 +22,24 @@ export class InstancesAPI {
   }
 
   public static async powerOnInstance(instance: Instance) {
+    if (environment.isDevelopment) return await new Promise((r) => setTimeout(r, 300))
+
     await ScalewayAPI.post(`/instance/v1/zones/${instance.zone}/servers/${instance.id}/action`, {
       action: 'poweron',
     })
   }
 
   public static async powerOffInstance(instance: Instance) {
+    if (environment.isDevelopment) return await new Promise((r) => setTimeout(r, 300))
+
     await ScalewayAPI.post(`/instance/v1/zones/${instance.zone}/servers/${instance.id}/action`, {
       action: 'poweroff',
     })
   }
 
   public static async rebootInstance(instance: Instance) {
+    if (environment.isDevelopment) return await new Promise((r) => setTimeout(r, 300))
+
     await ScalewayAPI.post(`/instance/v1/zones/${instance.zone}/servers/${instance.id}/action`, {
       action: 'reboot',
     })
