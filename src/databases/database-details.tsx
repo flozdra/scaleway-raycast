@@ -45,6 +45,14 @@ export default function DatabaseDetails(database: Database) {
               database.volume.type === 'lssd' ? 'Local' : 'Block'
             } storage)`}
           />
+          <List.Item.Detail.Metadata.Label
+            title="High availability"
+            text={database.is_ha_cluster ? 'Yes' : 'No'}
+          />
+          <List.Item.Detail.Metadata.Label
+            title="Read replicas"
+            text={database.read_replicas.length.toString()}
+          />
 
           {database.endpoints.map((endpoint, i) => (
             <List.Item.Detail.Metadata.Label

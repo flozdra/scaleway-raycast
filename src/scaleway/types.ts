@@ -125,7 +125,17 @@ export interface Database {
     type: 'lssd' | 'bssd'
     size: number
   }
+  is_ha_cluster: boolean
+  read_replicas: { id: string }[]
 }
+
+// export interface DatabaseMetrics {
+//   name: 'cpu_usage_percent' | 'mem_usage_percent' | 'total_connections' | 'disk_usage_percent'
+//   points: [string, number][]
+//   metadata: {
+//     node: string
+//   }
+// }
 
 export enum RedisClusterStatus {
   AUTOHEALING = 'autohealing',
@@ -154,3 +164,11 @@ export interface RedisCluster {
   node_type: string
   cluster_size: number
 }
+
+// export interface RedisClusterMetrics {
+//   name: 'cpu_usage_percent' | 'mem_usage_percent' | 'db_memory_usage_percent'
+//   points: [string, number][]
+//   metadata: {
+//     node: string
+//   }
+// }
