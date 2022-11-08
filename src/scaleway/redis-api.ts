@@ -1,7 +1,6 @@
 import { RedisCluster } from './types'
 import { ScalewayAPI } from './api'
 import { fakeRedisClusters } from './fake-data/fake-redis'
-import { environment } from '@raycast/api'
 
 export class RedisAPI {
   private static readonly ZONES = [
@@ -11,7 +10,7 @@ export class RedisAPI {
   ]
 
   public static async getAllClusters(): Promise<RedisCluster[]> {
-    if (environment.isDevelopment) return fakeRedisClusters
+    if (process.env.NODE_ENV === 'development') return fakeRedisClusters
 
     const responses = await Promise.all(
       RedisAPI.ZONES.map((zone) =>

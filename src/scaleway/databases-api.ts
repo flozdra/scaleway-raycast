@@ -1,13 +1,12 @@
 import { Database } from './types'
 import { ScalewayAPI } from './api'
-import { environment } from '@raycast/api'
 import { fakeDatabases } from './fake-data/fake-databases'
 
 export class DatabasesAPI {
   private static readonly REGIONS = ['fr-par', 'nl-ams', 'pl-waw']
 
   public static async getAllDatabases(): Promise<Database[]> {
-    if (environment.isDevelopment) return fakeDatabases
+    if (process.env.NODE_ENV === 'development') return fakeDatabases
 
     const responses = await Promise.all(
       DatabasesAPI.REGIONS.map((region) =>

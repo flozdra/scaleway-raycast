@@ -1,13 +1,12 @@
 import { Container, ContainerDomain, Namespace } from './types'
 import { ScalewayAPI } from './api'
-import { environment } from '@raycast/api'
 import { fakeContainers, fakeDomains, fakeNamespaces } from './fake-data/fake-containers'
 
 export class ContainersAPI {
   private static readonly REGIONS = ['fr-par', 'nl-ams', 'pl-waw']
 
   public static async getAllNamespaces(): Promise<Namespace[]> {
-    if (environment.isDevelopment) return fakeNamespaces
+    if (process.env.NODE_ENV === 'development') return fakeNamespaces
 
     const responses = await Promise.all(
       ContainersAPI.REGIONS.map((region) =>
@@ -20,7 +19,7 @@ export class ContainersAPI {
   }
 
   public static async getAllContainers(): Promise<Container[]> {
-    if (environment.isDevelopment) return fakeContainers
+    if (process.env.NODE_ENV === 'development') return fakeContainers
 
     const responses = await Promise.all(
       ContainersAPI.REGIONS.map((region) =>
@@ -33,7 +32,7 @@ export class ContainersAPI {
   }
 
   public static async getAllDomains(): Promise<ContainerDomain[]> {
-    if (environment.isDevelopment) return fakeDomains
+    if (process.env.NODE_ENV === 'development') return fakeDomains
 
     const responses = await Promise.all(
       ContainersAPI.REGIONS.map((region) =>
@@ -46,7 +45,7 @@ export class ContainersAPI {
   }
 
   public static async deployContainer(container: Container): Promise<void> {
-    if (environment.isDevelopment) return await new Promise((r) => setTimeout(r, 300))
+    if (process.env.NODE_ENV === 'development') return await new Promise((r) => setTimeout(r, 300))
 
     await ScalewayAPI.post(
       `/containers/v1beta1/regions/${container.region}/containers/${container.id}/deploy`

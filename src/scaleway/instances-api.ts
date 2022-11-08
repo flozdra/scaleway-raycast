@@ -1,6 +1,5 @@
 import { Instance } from './types'
 import { ScalewayAPI } from './api'
-import { environment } from '@raycast/api'
 import { fakeInstances } from './fake-data/fake-instances'
 
 export class InstancesAPI {
@@ -11,7 +10,7 @@ export class InstancesAPI {
   ]
 
   public static async getAllInstances(): Promise<Instance[]> {
-    if (environment.isDevelopment) return fakeInstances
+    if (process.env.NODE_ENV === 'development') return fakeInstances
 
     const responses = await Promise.all(
       InstancesAPI.ZONES.map((zone) =>
@@ -22,7 +21,7 @@ export class InstancesAPI {
   }
 
   public static async powerOnInstance(instance: Instance) {
-    if (environment.isDevelopment) return await new Promise((r) => setTimeout(r, 300))
+    if (process.env.NODE_ENV === 'development') return await new Promise((r) => setTimeout(r, 300))
 
     await ScalewayAPI.post(`/instance/v1/zones/${instance.zone}/servers/${instance.id}/action`, {
       action: 'poweron',
@@ -30,7 +29,7 @@ export class InstancesAPI {
   }
 
   public static async powerOffInstance(instance: Instance) {
-    if (environment.isDevelopment) return await new Promise((r) => setTimeout(r, 300))
+    if (process.env.NODE_ENV === 'development') return await new Promise((r) => setTimeout(r, 300))
 
     await ScalewayAPI.post(`/instance/v1/zones/${instance.zone}/servers/${instance.id}/action`, {
       action: 'poweroff',
@@ -38,7 +37,7 @@ export class InstancesAPI {
   }
 
   public static async rebootInstance(instance: Instance) {
-    if (environment.isDevelopment) return await new Promise((r) => setTimeout(r, 300))
+    if (process.env.NODE_ENV === 'development') return await new Promise((r) => setTimeout(r, 300))
 
     await ScalewayAPI.post(`/instance/v1/zones/${instance.zone}/servers/${instance.id}/action`, {
       action: 'reboot',
