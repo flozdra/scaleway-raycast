@@ -7,7 +7,8 @@ type Params = { [key: string]: string | number | undefined }
 export class ScalewayAPI {
   private static BASE_URL = 'https://api.scaleway.com'
   private static SECRET_KEY = getPreferenceValues().secretKey
-  public static REGIONS = ['fr-par', 'nl-ams', 'pl-waw']
+
+  public static CONSOLE_URL = 'https://console.scaleway.com'
 
   public static async get<T>(endpoint: string, query: Params = {}): Promise<T> {
     // Build the URL

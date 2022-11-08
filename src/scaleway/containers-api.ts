@@ -42,4 +42,11 @@ export class ContainersAPI {
       `/containers/v1beta1/regions/${container.region}/containers/${container.id}/deploy`
     )
   }
+
+  // public static async getContainerLogs(container: Container): Promise<ContainerLog[]> {
+  //   const response = await ScalewayAPI.get<{ logs: ContainerLog[] }>(
+  //     `/containers/v1beta1/regions/${container.region}/containers/${container.id}/logs`
+  //   )
+  //   return response.logs
+  // }
 }

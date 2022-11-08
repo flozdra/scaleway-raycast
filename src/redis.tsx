@@ -1,5 +1,5 @@
 import { ActionPanel, List } from '@raycast/api'
-import { catchError } from './scaleway/api'
+import { catchError, ScalewayAPI } from './scaleway/api'
 import { useEffect, useState } from 'react'
 import { RedisCluster } from './scaleway/types'
 import { getCountryImage, getRedisClusterStatusIcon } from './utils'
@@ -54,10 +54,8 @@ export default function Redis() {
             detail={RedisDetails(cluster)}
             actions={
               <ActionPanel>
-                <ActionPanel.Item.OpenInBrowser
-                  title="Open in Browser"
-                  url={`https://console.scaleway.com/redis/clusters/${cluster.zone}/${cluster.id}/overview`}
-                />
+                <ActionPanel.Item.OpenInBrowser url={getRedisClusterUrl(cluster)} />
+                <ActionPanel.Item.CopyToClipboard content={getRedisClusterUrl(cluster)} />
               </ActionPanel>
             }
           />
@@ -65,4 +63,8 @@ export default function Redis() {
       </List.Section>
     </List>
   )
+}
+
+function getRedisClusterUrl(cluster: RedisCluster) {
+  return `${ScalewayAPI.CONSOLE_URL}/redis/clusters/${cluster.zone}/${cluster.id}/overview`
 }

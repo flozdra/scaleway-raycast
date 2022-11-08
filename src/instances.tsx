@@ -1,20 +1,9 @@
-import {
-  Action,
-  ActionPanel,
-  Alert,
-  confirmAlert,
-  Icon,
-  List,
-  showToast,
-  Toast,
-} from '@raycast/api'
-import { catchError, ScalewayAPI } from './scaleway/api'
+import { Action, ActionPanel, Icon, List } from '@raycast/api'
+import {catchError, ScalewayAPI} from './scaleway/api'
 import { useEffect, useState } from 'react'
 import { Instance } from './scaleway/types'
 import { getCountryImage, getInstanceStateIcon } from './utils'
 import InstanceDetails from './instances/instance-details'
-import Style = Toast.Style
-import ActionStyle = Alert.ActionStyle
 import { powerOffInstance, powerOnInstance, rebootInstance } from './instances/instance-actions'
 import { InstancesAPI } from './scaleway/instances-api'
 
@@ -80,10 +69,8 @@ export default function Instances() {
             detail={InstanceDetails(instance)}
             actions={
               <ActionPanel>
-                <ActionPanel.Item.OpenInBrowser
-                  title="Open in Browser"
-                  url={`https://console.scaleway.com/instance/servers/${instance.zone}/${instance.id}/overview`}
-                />
+                <ActionPanel.Item.OpenInBrowser url={getInstanceUrl(instance)} />
+                <ActionPanel.Item.CopyToClipboard content={getInstanceUrl(instance)} />
                 {instance.allowed_actions.includes('reboot') && (
                   <ActionPanel.Item
                     title="Reboot"
@@ -96,7 +83,7 @@ export default function Instances() {
                   <ActionPanel.Item
                     title="Power On"
                     icon={Icon.Play}
-                    shortcut={{ modifiers: ['cmd'], key: 'p' }}
+                    shortcut={{ modifiers: ['cmd'], key: 'u' }}
                     onAction={async () => await executeAction(instance, 'poweron')}
                   />
                 )}
@@ -116,4 +103,8 @@ export default function Instances() {
       </List.Section>
     </List>
   )
+}
+
+function getInstanceUrl(instance: Instance) {
+  return `${ScalewayAPI.CONSOLE_URL}/instance/servers/${instance.zone}/${instance.id}/overview`
 }

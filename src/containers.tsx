@@ -1,12 +1,11 @@
 import { ActionPanel, confirmAlert, Icon, List, showToast, Toast } from '@raycast/api'
-import { getPrivacyAccessory, getContainerStatusIcon, getCountryImage } from './utils'
+import { getContainerStatusIcon, getCountryImage, getPrivacyAccessory } from './utils'
 import { catchError, ScalewayAPI } from './scaleway/api'
 import { useEffect, useMemo, useState } from 'react'
-import { Container, ContainerDomain, ContainerStatus, Namespace } from './scaleway/types'
-import ContainerLogs from './containers/container-logs'
+import { Container, ContainerDomain, Namespace } from './scaleway/types'
 import ContainerDetails from './containers/container-details'
-import Style = Toast.Style
 import { ContainersAPI } from './scaleway/containers-api'
+import Style = Toast.Style
 
 interface ContainersState {
   isLoading: boolean
@@ -129,15 +128,8 @@ export default function Containers() {
               detail={ContainerDetails(container)}
               actions={
                 <ActionPanel>
-                  <ActionPanel.Item.Push
-                    title="See Logs"
-                    target={<ContainerLogs container={container} />}
-                    icon={Icon.Terminal}
-                  />
-                  <ActionPanel.Item.OpenInBrowser
-                    title="Open in Browser"
-                    url={`https://console.scaleway.com/containers/namespaces/${container.region}/${container.namespace_id}/containers/${container.id}/deployment`}
-                  />
+                  <ActionPanel.Item.OpenInBrowser url={getContainerUrl(container)} />
+                  <ActionPanel.Item.CopyToClipboard content={getContainerUrl(container)} />
                   <ActionPanel.Item
                     title="Deploy a Container"
                     icon={Icon.Plus}
@@ -152,4 +144,8 @@ export default function Containers() {
       )}
     </List>
   )
+}
+
+function getContainerUrl(container: Container) {
+  return `${ScalewayAPI.CONSOLE_URL}/containers/namespaces/${container.region}/${container.namespace_id}/containers/${container.id}/deployment`
 }

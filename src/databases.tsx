@@ -1,5 +1,5 @@
 import { ActionPanel, List } from '@raycast/api'
-import { catchError } from './scaleway/api'
+import {catchError, ScalewayAPI} from './scaleway/api'
 import { useEffect, useState } from 'react'
 import { Database } from './scaleway/types'
 import { getCountryImage, getDatabaseStatusIcon } from './utils'
@@ -54,10 +54,8 @@ export default function Databases() {
             detail={DatabaseDetails(database)}
             actions={
               <ActionPanel>
-                <ActionPanel.Item.OpenInBrowser
-                  title="Open in Browser"
-                  url={`https://console.scaleway.com/rdb/instances/${database.region}/${database.id}/overview`}
-                />
+                <ActionPanel.Item.OpenInBrowser url={getDatabaseUrl(database)} />
+                <ActionPanel.Item.CopyToClipboard content={getDatabaseUrl(database)} />
               </ActionPanel>
             }
           />
@@ -65,4 +63,8 @@ export default function Databases() {
       </List.Section>
     </List>
   )
+}
+
+function getDatabaseUrl(database: Database) {
+  return `${ScalewayAPI.CONSOLE_URL}/rdb/instances/${database.region}/${database.id}/overview`
 }

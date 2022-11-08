@@ -1,14 +1,12 @@
 import { Color, Icon } from '@raycast/api'
 import {
   Container,
-  Log,
-  Privacy,
   ContainerStatus,
-  InstanceState,
   DatabaseStatus,
+  InstanceState,
+  Privacy,
   RedisClusterStatus,
 } from './scaleway/types'
-import { useEffect, useRef } from 'react'
 
 export function getContainerStatusIcon(status: ContainerStatus) {
   let icon: { source: Icon; tintColor?: Color }
@@ -180,16 +178,9 @@ export function getPrivacyAccessory(privacy: Privacy) {
 export function getRegistryName(container: Container) {
   return container.registry_image.substring(0, container.registry_image.lastIndexOf('/'))
 }
+
 export function getImageName(container: Container) {
   return container.registry_image.split('/').pop()
-}
-
-export function getLogMarkdown(log: Log) {
-  try {
-    return '```\n' + JSON.stringify(JSON.parse(log.message), null, '\t') + '\n```'
-  } catch {
-    return '```\n' + log.message + '\n```'
-  }
 }
 
 export function bytesToSize(bytes: number) {
@@ -197,27 +188,4 @@ export function bytesToSize(bytes: number) {
   if (bytes == 0) return '0 Byte'
   const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1e3)).toString())
   return Math.round(bytes / Math.pow(1e3, i)) + ' ' + sizes[i]
-}
-
-export function useInterval<T>(callback: T, delay: number) {
-  const savedCallback = useRef<T>()
-
-  // Remember the latest callback.
-  useEffect(() => {
-    savedCallback.current = callback
-  }, [callback])
-
-  // Set up the interval.
-  useEffect(() => {
-    function tick() {
-      if (typeof savedCallback.current === 'function') {
-        savedCallback.current()
-      }
-    }
-    if (delay !== null) {
-      tick()
-      const id = setInterval(tick, delay)
-      return () => clearInterval(id)
-    }
-  }, [delay])
 }
