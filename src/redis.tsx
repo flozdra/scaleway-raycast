@@ -38,8 +38,8 @@ export default function Redis() {
   }, [])
 
   return (
-    <List isLoading={state.isLoading} isShowingDetail>
-      <List.Section title="Instances">
+    <List isLoading={state.isLoading} isShowingDetail searchBarPlaceholder="Search cluster...">
+      <List.Section>
         {state.clusters.map((cluster) => (
           <List.Item
             key={cluster.id}

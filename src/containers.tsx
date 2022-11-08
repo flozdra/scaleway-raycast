@@ -96,29 +96,29 @@ export default function Containers() {
     <List
       isLoading={state.isLoading}
       isShowingDetail
+      searchBarPlaceholder="Search containers..."
       searchBarAccessory={
         <List.Dropdown
-          tooltip="Select Namespace"
+          tooltip="Change Namespace"
+          placeholder="Search namespace..."
           storeValue={true}
           onChange={(newValue) => {
             setState((previous) => ({ ...previous, selectedNamespaceId: newValue }))
           }}
         >
-          <List.Dropdown.Section title="Namespaces">
-            {state.namespaces.map((namespace) => (
-              <List.Dropdown.Item
-                key={namespace.id}
-                title={namespace.name}
-                value={namespace.id}
-                icon={getCountryImage(namespace.region)}
-              />
-            ))}
-          </List.Dropdown.Section>
+          {state.namespaces.map((namespace) => (
+            <List.Dropdown.Item
+              key={namespace.id}
+              title={namespace.name}
+              value={namespace.id}
+              icon={getCountryImage(namespace.region)}
+            />
+          ))}
         </List.Dropdown>
       }
     >
       {selectedNamespace && (
-        <List.Section key={selectedNamespace.id} title={selectedNamespace.name}>
+        <List.Section key={selectedNamespace.id}>
           {selectedNamespace.containers.map((container) => (
             <List.Item
               key={container.id}

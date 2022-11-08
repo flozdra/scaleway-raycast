@@ -1,5 +1,5 @@
 import { ActionPanel, List } from '@raycast/api'
-import {catchError, ScalewayAPI} from './scaleway/api'
+import { catchError, ScalewayAPI } from './scaleway/api'
 import { useEffect, useState } from 'react'
 import { Database } from './scaleway/types'
 import { getCountryImage, getDatabaseStatusIcon } from './utils'
@@ -38,8 +38,8 @@ export default function Databases() {
   }, [])
 
   return (
-    <List isLoading={state.isLoading} isShowingDetail>
-      <List.Section title="Instances">
+    <List isLoading={state.isLoading} isShowingDetail searchBarPlaceholder="Search databases...">
+      <List.Section>
         {state.databases.map((database) => (
           <List.Item
             key={database.id}

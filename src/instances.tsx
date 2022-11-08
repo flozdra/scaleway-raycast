@@ -1,5 +1,5 @@
 import { Action, ActionPanel, Icon, List } from '@raycast/api'
-import {catchError, ScalewayAPI} from './scaleway/api'
+import { catchError, ScalewayAPI } from './scaleway/api'
 import { useEffect, useState } from 'react'
 import { Instance } from './scaleway/types'
 import { getCountryImage, getInstanceStateIcon } from './utils'
@@ -53,8 +53,8 @@ export default function Instances() {
   }
 
   return (
-    <List isLoading={state.isLoading} isShowingDetail>
-      <List.Section title="Instances">
+    <List isLoading={state.isLoading} isShowingDetail searchBarPlaceholder="Search instances...">
+      <List.Section>
         {state.instances.map((instance) => (
           <List.Item
             key={instance.id}
