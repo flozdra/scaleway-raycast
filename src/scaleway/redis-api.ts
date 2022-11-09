@@ -19,11 +19,4 @@ export class RedisAPI {
     )
     return responses.map((r) => r.clusters).flat()
   }
-
-  // public static async getClusterMetrics(cluster: RedisCluster): Promise<RedisClusterMetrics[]> {
-  //   const response = await ScalewayAPI.get<{ timeseries: RedisClusterMetrics[] }>(
-  //     `/redis/v1/zones/${cluster.zone}/clusters/${cluster.id}/metrics`
-  //   )
-  //   return response.timeseries
-  // }
 }

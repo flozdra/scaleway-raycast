@@ -68,18 +68,6 @@ export function getInstanceStateIcon(state: InstanceState) {
   }
 }
 
-// export function getInstanceTagColor(type: string) {
-//   type = type.toLowerCase()
-//   if (type.startsWith('play')) return '#35ee8b'
-//   if (type.startsWith('dev')) return '#eed535'
-//   if (type.startsWith('pro')) return '#35a1ee'
-//   if (type.startsWith('gp')) return '#35a1ee'
-//   if (type.startsWith('render')) return '#a47fef'
-//   if (type.startsWith('stardust')) return '#f662dd'
-//   if (type.startsWith('ent')) return '#ef9c68'
-//   return '#ff5656'
-// }
-
 export function getDatabaseStatusIcon(status: DatabaseStatus) {
   let icon: { source: Icon; tintColor?: Color }
 
@@ -152,13 +140,6 @@ export function getRedisClusterStatusIcon(status: RedisClusterStatus) {
     tooltip: status[0].toUpperCase() + status.slice(1),
   }
 }
-
-// export function getDatabaseNodeTypeColor(node: string) {
-//   node = node.toLowerCase()
-//   if (node.startsWith('db-dev')) return '#eed535'
-//   if (node.startsWith('db-gp')) return '#35a1ee'
-//   return '#e3e3e3'
-// }
 
 export function getCountryImage(region: string) {
   return `${region.toLowerCase().substring(0, 2)}.svg`
