@@ -2,7 +2,7 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "scaleway",
   "title": "Scaleway",
-  "description": "Display information about scaleway organisation",
+  "description": "Quick access to your Scaleway services",
   "icon": "scaleway.png",
   "author": "flozdra",
   "categories": [

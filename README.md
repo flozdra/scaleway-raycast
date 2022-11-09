@@ -4,7 +4,7 @@
     width="64"
   />
 
-  <h1>Scaleway Console</h1>
+  <h1>Scaleway</h1>
 
 Raycast extension to search containers, database, instances or Redis clusters, to perform actions, and more to come.
 
@@ -49,7 +49,7 @@ That's it! You're ready to use the extension! 🚀
 
 ![list-containers](./metadata/1-containers.png)
 
-### List Last Logs of a Container
+### List logs of a Container
 
 ![container-logs](./metadata/2-container-logs.png)
 
@@ -64,3 +64,10 @@ That's it! You're ready to use the extension! 🚀
 ### List Redis Clusters
 
 ![list-redis-clusters](./metadata/5-redis.png)
+
+## Development
+
+When running in development, the fake data will be used instead of the real API.
+
+If you want to use the real API while developing, you can set the `Use Node production environment`
+setting in Raycast preferences. [See docs](https://developers.raycast.com/basics/debug-an-extension#environments).
