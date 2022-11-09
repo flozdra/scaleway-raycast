@@ -53,14 +53,14 @@ export interface ContainerDomain {
   url: string
 }
 
-// export interface ContainerLog {
-//   id: string
-//   message: string
-//   timestamp: string
-//   level: string
-//   source: string
-//   stream: 'unknown' | 'stdout' | 'stderr'
-// }
+export interface ContainerLog {
+  id: string
+  message: string
+  timestamp: string
+  level: string
+  source: string
+  stream: 'unknown' | 'stdout' | 'stderr'
+}
 
 export enum InstanceState {
   LOCKED = 'locked',

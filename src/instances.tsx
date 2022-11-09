@@ -54,53 +54,51 @@ export default function Instances() {
 
   return (
     <List isLoading={state.isLoading} isShowingDetail searchBarPlaceholder="Search instances...">
-      <List.Section>
-        {state.instances.map((instance) => (
-          <List.Item
-            key={instance.id}
-            title={instance.name}
-            icon={getInstanceStateIcon(instance.state)}
-            accessories={[
-              {
-                icon: getCountryImage(instance.zone),
-                tooltip: instance.zone,
-              },
-            ]}
-            detail={InstanceDetails(instance)}
-            actions={
-              <ActionPanel>
-                <ActionPanel.Item.OpenInBrowser url={getInstanceUrl(instance)} />
-                <ActionPanel.Item.CopyToClipboard content={getInstanceUrl(instance)} />
-                {instance.allowed_actions.includes('reboot') && (
-                  <ActionPanel.Item
-                    title="Reboot"
-                    icon={Icon.RotateClockwise}
-                    shortcut={{ modifiers: ['cmd'], key: 'r' }}
-                    onAction={async () => await executeAction(instance, 'reboot')}
-                  />
-                )}
-                {instance.allowed_actions.includes('poweron') && (
-                  <ActionPanel.Item
-                    title="Power On"
-                    icon={Icon.Play}
-                    shortcut={{ modifiers: ['cmd'], key: 'u' }}
-                    onAction={async () => await executeAction(instance, 'poweron')}
-                  />
-                )}
-                {instance.allowed_actions.includes('poweroff') && (
-                  <ActionPanel.Item
-                    title="Shutdown"
-                    icon={Icon.Stop}
-                    style={Action.Style.Destructive}
-                    shortcut={{ modifiers: ['cmd'], key: 'q' }}
-                    onAction={async () => await executeAction(instance, 'poweroff')}
-                  />
-                )}
-              </ActionPanel>
-            }
-          />
-        ))}
-      </List.Section>
+      {state.instances.map((instance) => (
+        <List.Item
+          key={instance.id}
+          title={instance.name}
+          icon={getInstanceStateIcon(instance.state)}
+          accessories={[
+            {
+              icon: getCountryImage(instance.zone),
+              tooltip: instance.zone,
+            },
+          ]}
+          detail={InstanceDetails(instance)}
+          actions={
+            <ActionPanel>
+              <ActionPanel.Item.OpenInBrowser url={getInstanceUrl(instance)} />
+              <ActionPanel.Item.CopyToClipboard content={getInstanceUrl(instance)} />
+              {instance.allowed_actions.includes('reboot') && (
+                <ActionPanel.Item
+                  title="Reboot"
+                  icon={Icon.RotateClockwise}
+                  shortcut={{ modifiers: ['cmd'], key: 'r' }}
+                  onAction={async () => await executeAction(instance, 'reboot')}
+                />
+              )}
+              {instance.allowed_actions.includes('poweron') && (
+                <ActionPanel.Item
+                  title="Power On"
+                  icon={Icon.Play}
+                  shortcut={{ modifiers: ['cmd'], key: 'u' }}
+                  onAction={async () => await executeAction(instance, 'poweron')}
+                />
+              )}
+              {instance.allowed_actions.includes('poweroff') && (
+                <ActionPanel.Item
+                  title="Shutdown"
+                  icon={Icon.Stop}
+                  style={Action.Style.Destructive}
+                  shortcut={{ modifiers: ['cmd'], key: 'q' }}
+                  onAction={async () => await executeAction(instance, 'poweroff')}
+                />
+              )}
+            </ActionPanel>
+          }
+        />
+      ))}
     </List>
   )
 }

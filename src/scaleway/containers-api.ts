@@ -1,6 +1,6 @@
-import { Container, ContainerDomain, Namespace } from './types'
+import { Container, ContainerDomain, ContainerLog, Namespace } from './types'
 import { ScalewayAPI } from './api'
-import { fakeContainers, fakeDomains, fakeNamespaces } from './fake-data/fake-containers'
+import { fakeContainers, fakeDomains, fakeLogs, fakeNamespaces } from './fake-data/fake-containers'
 
 export class ContainersAPI {
   private static readonly REGIONS = ['fr-par', 'nl-ams', 'pl-waw']
@@ -52,10 +52,13 @@ export class ContainersAPI {
     )
   }
 
-  // public static async getContainerLogs(container: Container): Promise<ContainerLog[]> {
-  //   const response = await ScalewayAPI.get<{ logs: ContainerLog[] }>(
-  //     `/containers/v1beta1/regions/${container.region}/containers/${container.id}/logs`
-  //   )
-  //   return response.logs
-  // }
+  public static async getContainerLogs(container: Container): Promise<ContainerLog[]> {
+    if (process.env.NODE_ENV === 'development') return fakeLogs
+
+    const response = await ScalewayAPI.get<{ logs: ContainerLog[] }>(
+      `/containers/v1beta1/regions/${container.region}/containers/${container.id}/logs`,
+      { page_size: 25 }
+    )
+    return response.logs
+  }
 }

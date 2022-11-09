@@ -6,6 +6,7 @@ import { Container, ContainerDomain, Namespace } from './scaleway/types'
 import ContainerDetails from './containers/container-details'
 import { ContainersAPI } from './scaleway/containers-api'
 import Style = Toast.Style
+import ContainerLogs from './containers/container-logs'
 
 interface ContainersState {
   isLoading: boolean
@@ -130,6 +131,12 @@ export default function Containers() {
                 <ActionPanel>
                   <ActionPanel.Item.OpenInBrowser url={getContainerUrl(container)} />
                   <ActionPanel.Item.CopyToClipboard content={getContainerUrl(container)} />
+                  <ActionPanel.Item.Push
+                    title="See Last Logs"
+                    icon={Icon.Terminal}
+                    shortcut={{ modifiers: ['cmd'], key: 'l' }}
+                    target={<ContainerLogs container={container} />}
+                  />
                   <ActionPanel.Item
                     title="Deploy a Container"
                     icon={Icon.Plus}

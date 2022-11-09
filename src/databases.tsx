@@ -39,28 +39,26 @@ export default function Databases() {
 
   return (
     <List isLoading={state.isLoading} isShowingDetail searchBarPlaceholder="Search databases...">
-      <List.Section>
-        {state.databases.map((database) => (
-          <List.Item
-            key={database.id}
-            title={database.name}
-            icon={getDatabaseStatusIcon(database.status)}
-            accessories={[
-              {
-                icon: getCountryImage(database.region),
-                tooltip: database.region,
-              },
-            ]}
-            detail={DatabaseDetails(database)}
-            actions={
-              <ActionPanel>
-                <ActionPanel.Item.OpenInBrowser url={getDatabaseUrl(database)} />
-                <ActionPanel.Item.CopyToClipboard content={getDatabaseUrl(database)} />
-              </ActionPanel>
-            }
-          />
-        ))}
-      </List.Section>
+      {state.databases.map((database) => (
+        <List.Item
+          key={database.id}
+          title={database.name}
+          icon={getDatabaseStatusIcon(database.status)}
+          accessories={[
+            {
+              icon: getCountryImage(database.region),
+              tooltip: database.region,
+            },
+          ]}
+          detail={DatabaseDetails(database)}
+          actions={
+            <ActionPanel>
+              <ActionPanel.Item.OpenInBrowser url={getDatabaseUrl(database)} />
+              <ActionPanel.Item.CopyToClipboard content={getDatabaseUrl(database)} />
+            </ActionPanel>
+          }
+        />
+      ))}
     </List>
   )
 }

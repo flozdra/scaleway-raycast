@@ -39,28 +39,26 @@ export default function Redis() {
 
   return (
     <List isLoading={state.isLoading} isShowingDetail searchBarPlaceholder="Search cluster...">
-      <List.Section>
-        {state.clusters.map((cluster) => (
-          <List.Item
-            key={cluster.id}
-            title={cluster.name}
-            icon={getRedisClusterStatusIcon(cluster.status)}
-            accessories={[
-              {
-                icon: getCountryImage(cluster.zone),
-                tooltip: cluster.zone,
-              },
-            ]}
-            detail={RedisDetails(cluster)}
-            actions={
-              <ActionPanel>
-                <ActionPanel.Item.OpenInBrowser url={getRedisClusterUrl(cluster)} />
-                <ActionPanel.Item.CopyToClipboard content={getRedisClusterUrl(cluster)} />
-              </ActionPanel>
-            }
-          />
-        ))}
-      </List.Section>
+      {state.clusters.map((cluster) => (
+        <List.Item
+          key={cluster.id}
+          title={cluster.name}
+          icon={getRedisClusterStatusIcon(cluster.status)}
+          accessories={[
+            {
+              icon: getCountryImage(cluster.zone),
+              tooltip: cluster.zone,
+            },
+          ]}
+          detail={RedisDetails(cluster)}
+          actions={
+            <ActionPanel>
+              <ActionPanel.Item.OpenInBrowser url={getRedisClusterUrl(cluster)} />
+              <ActionPanel.Item.CopyToClipboard content={getRedisClusterUrl(cluster)} />
+            </ActionPanel>
+          }
+        />
+      ))}
     </List>
   )
 }
