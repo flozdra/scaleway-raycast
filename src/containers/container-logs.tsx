@@ -42,62 +42,58 @@ export default function ContainerLogs(props: { container: Container }) {
       searchBarPlaceholder={'Filter logs by content...'}
       navigationTitle={props.container.name}
     >
-      <List.Section title="Last 25 logs">
-        {state.logs.map((log) => (
-          <List.Item
-            key={log.id}
-            title={log.message}
-            keywords={[log.level, log.source]}
-            icon={
-              log.level === 'error' || log.stream === 'stderr'
-                ? { source: Icon.Warning, tintColor: Color.Red }
-                : { source: Icon.Info }
-            }
-            detail={
-              <List.Item.Detail
-                markdown={getLogMarkdown(log)}
-                metadata={
-                  <List.Item.Detail.Metadata>
+      {state.logs.map((log) => (
+        <List.Item
+          key={log.id}
+          title={log.message}
+          keywords={[log.level, log.source]}
+          icon={
+            log.level === 'error' || log.stream === 'stderr'
+              ? { source: Icon.Warning, tintColor: Color.Red }
+              : { source: Icon.Info }
+          }
+          detail={
+            <List.Item.Detail
+              markdown={getLogMarkdown(log)}
+              metadata={
+                <List.Item.Detail.Metadata>
+                  <List.Item.Detail.Metadata.Label
+                    title="Timestamp"
+                    text={new Date(log.timestamp).toLocaleString('en-US', {
+                      dateStyle: 'medium',
+                      timeStyle: 'long',
+                    })}
+                  />
+                  {log.level && <List.Item.Detail.Metadata.Label title="Level" text={log.level} />}
+                  {log.source && (
+                    <List.Item.Detail.Metadata.Label title="Source" text={log.source} />
+                  )}
+                  {log.stream && (
                     <List.Item.Detail.Metadata.Label
-                      title="Timestamp"
-                      text={new Date(log.timestamp).toLocaleString('en-US', {
-                        dateStyle: 'medium',
-                        timeStyle: 'long',
-                      })}
+                      title="Stream"
+                      text={log.stream}
+                      icon={
+                        log.stream === 'stderr'
+                          ? { source: Icon.Warning, tintColor: Color.Red }
+                          : { source: Icon.Info }
+                      }
                     />
-                    {log.level && (
-                      <List.Item.Detail.Metadata.Label title="Level" text={log.level} />
-                    )}
-                    {log.source && (
-                      <List.Item.Detail.Metadata.Label title="Source" text={log.source} />
-                    )}
-                    {log.stream && (
-                      <List.Item.Detail.Metadata.Label
-                        title="Stream"
-                        text={log.stream}
-                        icon={
-                          log.stream === 'stderr'
-                            ? { source: Icon.Warning, tintColor: Color.Red }
-                            : { source: Icon.Info }
-                        }
-                      />
-                    )}
-                  </List.Item.Detail.Metadata>
-                }
+                  )}
+                </List.Item.Detail.Metadata>
+              }
+            />
+          }
+          actions={
+            <ActionPanel>
+              <ActionPanel.Item.CopyToClipboard
+                title="Copy content to Clipboard"
+                content={log.message}
               />
-            }
-            actions={
-              <ActionPanel>
-                <ActionPanel.Item.CopyToClipboard
-                  title="Copy content to Clipboard"
-                  content={log.message}
-                />
-                <ActionPanel.Item.OpenInBrowser url={getLoggingContainerUrl(props.container)} />
-              </ActionPanel>
-            }
-          />
-        ))}
-      </List.Section>
+              <ActionPanel.Item.OpenInBrowser url={getLoggingContainerUrl(props.container)} />
+            </ActionPanel>
+          }
+        />
+      ))}
     </List>
   )
 }

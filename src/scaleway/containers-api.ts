@@ -57,7 +57,7 @@ export class ContainersAPI {
 
     const response = await ScalewayAPI.get<{ logs: ContainerLog[] }>(
       `/containers/v1beta1/regions/${container.region}/containers/${container.id}/logs`,
-      { page_size: 25 }
+      { page_size: 50 }
     )
     return response.logs
   }

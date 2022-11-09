@@ -118,37 +118,34 @@ export default function Containers() {
         </List.Dropdown>
       }
     >
-      {selectedNamespace && (
-        <List.Section key={selectedNamespace.id}>
-          {selectedNamespace.containers.map((container) => (
-            <List.Item
-              key={container.id}
-              title={container.name}
-              icon={getContainerStatusIcon(container.status)}
-              accessories={[getPrivacyAccessory(container.privacy)]}
-              detail={ContainerDetails(container)}
-              actions={
-                <ActionPanel>
-                  <ActionPanel.Item.OpenInBrowser url={getContainerUrl(container)} />
-                  <ActionPanel.Item.CopyToClipboard content={getContainerUrl(container)} />
-                  <ActionPanel.Item.Push
-                    title="See Last Logs"
-                    icon={Icon.Terminal}
-                    shortcut={{ modifiers: ['cmd'], key: 'l' }}
-                    target={<ContainerLogs container={container} />}
-                  />
-                  <ActionPanel.Item
-                    title="Deploy a Container"
-                    icon={Icon.Plus}
-                    shortcut={{ modifiers: ['cmd'], key: 'n' }}
-                    onAction={async () => await deployContainer(container)}
-                  />
-                </ActionPanel>
-              }
-            />
-          ))}
-        </List.Section>
-      )}
+      {selectedNamespace &&
+        selectedNamespace.containers.map((container) => (
+          <List.Item
+            key={container.id}
+            title={container.name}
+            icon={getContainerStatusIcon(container.status)}
+            accessories={[getPrivacyAccessory(container.privacy)]}
+            detail={ContainerDetails(container)}
+            actions={
+              <ActionPanel>
+                <ActionPanel.Item.OpenInBrowser url={getContainerUrl(container)} />
+                <ActionPanel.Item.CopyToClipboard content={getContainerUrl(container)} />
+                <ActionPanel.Item.Push
+                  title="See Last Logs"
+                  icon={Icon.Terminal}
+                  shortcut={{ modifiers: ['cmd'], key: 'l' }}
+                  target={<ContainerLogs container={container} />}
+                />
+                <ActionPanel.Item
+                  title="Deploy a Container"
+                  icon={Icon.Plus}
+                  shortcut={{ modifiers: ['cmd'], key: 'n' }}
+                  onAction={async () => await deployContainer(container)}
+                />
+              </ActionPanel>
+            }
+          />
+        ))}
     </List>
   )
 }
