@@ -15,7 +15,7 @@ export async function rebootInstance(instance: Instance) {
       })
     ) {
       await showToast({
-        title: 'Rebooting instance',
+        title: 'Rebooting instance...',
         message: instance.name,
         style: Style.Animated,
       })
@@ -46,7 +46,7 @@ export async function powerOnInstance(instance: Instance) {
       })
     ) {
       await showToast({
-        title: 'Powering on instance',
+        title: 'Powering on instance..',
         message: instance.name,
         style: Style.Animated,
       })
@@ -77,7 +77,7 @@ export async function powerOffInstance(instance: Instance) {
       })
     ) {
       await showToast({
-        title: 'Shutting down instance',
+        title: 'Shutting down instance...',
         message: instance.name,
         style: Style.Animated,
       })

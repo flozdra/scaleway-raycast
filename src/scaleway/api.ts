@@ -59,7 +59,7 @@ export async function catchError(error: unknown, message?: string) {
   console.error(error)
 
   await showToast({
-    style: Toast.Style.Failure,
     title: message || 'Failed to fetch data',
+    style: Toast.Style.Failure,
   })
 }

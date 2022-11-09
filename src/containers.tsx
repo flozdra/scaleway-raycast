@@ -22,7 +22,7 @@ export default function Containers() {
     try {
       if (await confirmAlert({ title: 'Are you sure you want to deploy a new container?' })) {
         await showToast({
-          title: 'Deploying a Container',
+          title: 'Deploying container...',
           message: container.name,
           style: Style.Animated,
         })
