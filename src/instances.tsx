@@ -69,7 +69,10 @@ export default function Instances() {
           actions={
             <ActionPanel>
               <ActionPanel.Item.OpenInBrowser url={getInstanceUrl(instance)} />
-              <ActionPanel.Item.CopyToClipboard content={getInstanceUrl(instance)} />
+              <ActionPanel.Item.CopyToClipboard
+                title="Copy URL"
+                content={getInstanceUrl(instance)}
+              />
               {instance.allowed_actions.includes('reboot') && (
                 <ActionPanel.Item
                   title="Reboot"

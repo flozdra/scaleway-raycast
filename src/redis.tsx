@@ -54,7 +54,10 @@ export default function Redis() {
           actions={
             <ActionPanel>
               <ActionPanel.Item.OpenInBrowser url={getRedisClusterUrl(cluster)} />
-              <ActionPanel.Item.CopyToClipboard content={getRedisClusterUrl(cluster)} />
+              <ActionPanel.Item.CopyToClipboard
+                title="Copy URL"
+                content={getRedisClusterUrl(cluster)}
+              />
             </ActionPanel>
           }
         />

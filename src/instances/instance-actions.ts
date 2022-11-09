@@ -11,7 +11,7 @@ export async function rebootInstance(instance: Instance) {
       await confirmAlert({
         title: 'Are you sure you want to reboot this instance?',
         icon: Icon.RotateClockwise,
-        primaryAction: { title: 'Reboot', style: ActionStyle.Destructive },
+        primaryAction: { title: 'Reboot', style: ActionStyle.Default },
       })
     ) {
       await showToast({

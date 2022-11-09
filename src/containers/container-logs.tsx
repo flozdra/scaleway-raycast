@@ -85,10 +85,7 @@ export default function ContainerLogs(props: { container: Container }) {
           }
           actions={
             <ActionPanel>
-              <ActionPanel.Item.CopyToClipboard
-                title="Copy content to Clipboard"
-                content={log.message}
-              />
+              <ActionPanel.Item.CopyToClipboard title="Copy Content" content={log.message} />
               <ActionPanel.Item.OpenInBrowser url={getLoggingContainerUrl(props.container)} />
             </ActionPanel>
           }

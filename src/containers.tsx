@@ -129,15 +129,18 @@ export default function Containers() {
             actions={
               <ActionPanel>
                 <ActionPanel.Item.OpenInBrowser url={getContainerUrl(container)} />
-                <ActionPanel.Item.CopyToClipboard content={getContainerUrl(container)} />
+                <ActionPanel.Item.CopyToClipboard
+                  title="Copy URL"
+                  content={getContainerUrl(container)}
+                />
                 <ActionPanel.Item.Push
-                  title="See Last Logs"
+                  title="See Logs"
                   icon={Icon.Terminal}
                   shortcut={{ modifiers: ['cmd'], key: 'l' }}
                   target={<ContainerLogs container={container} />}
                 />
                 <ActionPanel.Item
-                  title="Deploy a Container"
+                  title="Deploy Container"
                   icon={Icon.Plus}
                   shortcut={{ modifiers: ['cmd'], key: 'n' }}
                   onAction={async () => await deployContainer(container)}

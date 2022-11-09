@@ -54,7 +54,10 @@ export default function Databases() {
           actions={
             <ActionPanel>
               <ActionPanel.Item.OpenInBrowser url={getDatabaseUrl(database)} />
-              <ActionPanel.Item.CopyToClipboard content={getDatabaseUrl(database)} />
+              <ActionPanel.Item.CopyToClipboard
+                title="Copy URL"
+                content={getDatabaseUrl(database)}
+              />
             </ActionPanel>
           }
         />
